@@ -1,6 +1,22 @@
 # Dragon
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.4.
+Dragon is a scale chart creation tool
+
+## Why
+
+I was trying to learn the blues scale with drop D tuning but couldn't find one online, thought it would be nice to have a flexible tool that can show you scales for your tuning or what the pattern for a custom scale would look like.
+
+<small>This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.4.</small>
+
+# Global TODO
+
+- fretboard layout (guitars usually have 24 frets max)
+  - blip layout
+  - blip positioning/layout inside fretboard
+  - add fretboard markers (dots)
+- add more scales and make sure current ones are correct
+  - add tuning options
+  - add string options (6, 7, or 8 for guitar, maybe 4 or 5 for ukuleles)
 
 ## Development server
 
