@@ -17,6 +17,15 @@ I was trying to learn the blues scale with drop D tuning but couldn't find one o
 - add more scales and make sure current ones are correct
   - add tuning options
   - add string options (6, 7, or 8 for guitar, maybe 4 or 5 for ukuleles)
+- general layout
+  - options dropdwns at the top horizontally
+    - root note dropdown grid (when minimized shows note/letter)
+    - scale dropdown
+      - defaults list, custom checkbox at the top
+        - when minimized shows scale name
+        - if custom minimized text is "Custom"
+          - when expanded shows interval multiselect grid
+  - fretboard below, reflects selected config
 
 ## Development server
 
