@@ -25,6 +25,10 @@ I was trying to learn the blues scale with drop D tuning but couldn't find one o
         - when minimized shows scale name
         - if custom minimized text is "Custom"
           - when expanded shows interval multiselect grid
+    - left or right handed option
+    - color palette dropdown (v2, v1 will have dark mode defaults)
+      - ui component selection bubbles at the top, color wheel with rgb at the bottom, user can click to select or enter manually
+        - edit background, blip root, blip text root, string colors, fret colors, fretboard color, fretboard marker colors, etc.
   - fretboard below, reflects selected config
 
 ## Development server
