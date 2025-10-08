@@ -12,7 +12,10 @@ export class Scale {
         public readonly root: Note,
     ) { }
 
-    // get this scale's notes based on root and intervals
+    /**
+     * 
+     * @returns sharp notes in this scale
+     */
     getNotes(): Note[] {
         var notes: Note[] = [];
         var allNotes = [...allNotesWithSharps, ...allNotesWithSharps];

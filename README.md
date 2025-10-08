@@ -10,10 +10,14 @@ I was trying to learn the blues scale with drop D tuning but couldn't find one o
 
 # Global TODO
 
+- parent site html, options and fretboard below
+  - set min width and height, only desktop screen for now
+  - add phone screen support in future, make fretboard vertical, size based on screen size
 - fretboard layout (guitars usually have 24 frets max)
-  - blip layout
-  - blip positioning/layout inside fretboard
-  - add fretboard markers (dots)
+  - have fretboard update based on user prefs and resize events
+    - sharp or flat, colors (v2), scale notes, etc.
+  - add fretboard html (sizing, child canvas element that fills parent)
+  - 
 - add more scales and make sure current ones are correct
   - add tuning options
   - add string options (6, 7, or 8 for guitar, maybe 4 or 5 for ukuleles)
@@ -29,6 +33,7 @@ I was trying to learn the blues scale with drop D tuning but couldn't find one o
     - color palette dropdown (v2, v1 will have dark mode defaults)
       - ui component selection bubbles at the top, color wheel with rgb at the bottom, user can click to select or enter manually
         - edit background, blip root, blip text root, string colors, fret colors, fretboard color, fretboard marker colors, etc.
+    - use sharp or flat notes selector
   - fretboard below, reflects selected config
 
 ## Development server
