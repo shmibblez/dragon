@@ -4,7 +4,7 @@ Dragon is a scale chart creation tool
 
 ## Why
 
-I was trying to learn the blues scale with drop D tuning but couldn't find one online, thought it would be nice to have a flexible tool that can show you scales for your tuning or what the pattern for a custom scale would look like.
+I was trying to learn the blues scale with drop D tuning but couldn't find a scale online, thought it would be nice to have a flexible tool that can show you scales for your tuning or what the pattern for a custom scale would look like.
 
 <small>This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.4.</small>
 
