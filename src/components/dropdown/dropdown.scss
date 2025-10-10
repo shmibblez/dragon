@@ -1,0 +1,23 @@
+#dropdown {
+    width: auto;
+    height: auto;
+    background-color: gray;
+    border-radius: 1vw;
+    position: relative;
+    margin: 1vw;
+    padding: 1vw;
+    color: white;
+}
+
+#popup-content {
+    width: 25vw;
+    height: auto;
+    padding: 1vw;
+    background-color: lightblue;
+    border-radius: 2vw;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+}
