@@ -1,7 +1,11 @@
+.selected {
+    background-color: #f44f !important;
+}
+
 #dropdown {
     width: auto;
     height: auto;
-    background-color: gray;
+    background-color: #222f;
     border-radius: 1vw;
     position: relative;
     margin: 1vw;
@@ -9,14 +13,20 @@
     color: white;
 }
 
+#dropdown:hover {
+    background-color: #333f;
+    cursor: pointer;
+}
+
 #popup-content {
+    margin-top: 1vw;
     width: 25vw;
     height: auto;
     padding: 1vw;
     background-color: lightblue;
     border-radius: 2vw;
     position: absolute;
-    bottom: 0;
+    top: 100%;
     left: 50%;
     transform: translateX(-50%);
     color: white;

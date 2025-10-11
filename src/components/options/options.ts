@@ -14,7 +14,12 @@ export class OptionsComponent {
 
     constructor() { }
 
-    onSelectOption(option: option) {
+    // todo: when click outside, set option = null
+
+    onSelectOption(event: PointerEvent, option: option) {
         this.selectedOption = option;
+        event.stopPropagation();
+
+        console.log("Selected option: ", this.selectedOption);
     }
 }

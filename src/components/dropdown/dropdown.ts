@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, HostListener, Input } from "@angular/core";
 
 @Component({
     selector: "dropdown",
@@ -13,10 +13,4 @@ export class DropdownComponent {
     @Input() onSelect!: () => void;
     // todo: type for popup content
     @Input() popupContentHTML!: string;
-
-    // todo: detect click event
-    onClick() {
-        this.onSelect();
-        // todo: show child content when selected
-    }
 }
