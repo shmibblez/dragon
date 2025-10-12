@@ -2,7 +2,7 @@ import { Injectable, signal } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { Scale, ScaleRecipes } from "../objects/scale";
 import { Note } from "../objects/note";
-import { Tuning, TuningRecipes } from "../objects/tuning";
+import { NumberOfStrings, Tuning, TuningRecipes } from "../objects/tuning";
 
 /**
  * Dragon's Lair stores app state
@@ -40,12 +40,20 @@ export class LairService {
     return this.appState.getValue().noteType
   }
 
+  updateRootNote(root: Note) {
+    this.appState.next({ ...this.appState.getValue(), rootNote: root })
+  }
+
   updateTuning(tuning: Tuning) {
-    this.appState.next({ ...this.appState.getValue(), tuning })
+    this.appState.next({ ...this.appState.getValue(), tuning: tuning })
   }
 
   updateScale(scale: Scale) {
-    this.appState.next({ ...this.appState.getValue(), scale })
+    this.appState.next({ ...this.appState.getValue(), scale: scale })
+  }
+
+  updateNumberOfStrings(n: NumberOfStrings) {
+    this.appState.next({ ...this.appState.getValue(), numberOfStrings: n, tuning: TuningRecipes.get(n)!.get("Standard")! })
   }
 }
 
@@ -62,7 +70,7 @@ export interface Lair {
   // guitar tuning
   tuning: Tuning;
   numberOfFrets: number;
-  numberOfStrings: number;
+  numberOfStrings: NumberOfStrings;
   leftOrRightHanded: "left" | "right";
   noteType: "sharp" | "flat";
 }
@@ -72,7 +80,7 @@ const DEFAULT_LAIR: Lair = {
   scale: ScaleRecipes.get("Major")!,
   rootNote: "C",
   // guitar tuning
-  tuning: TuningRecipes.get("Standard")!,
+  tuning: TuningRecipes.get(6)!.get("Standard")!,
   numberOfFrets: 24,
   numberOfStrings: 6,
   leftOrRightHanded: "right",

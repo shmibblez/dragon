@@ -1,5 +1,5 @@
 <div id="dropdown" [ngClass]="{'selected': selected}">
-    <p>{{label}}</p>
+    <p style="display:inline;white-space:nowrap;">{{label}}</p>
     @if(selected) {
     <div id="popup-content">
         <ng-content></ng-content>

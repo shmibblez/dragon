@@ -21,7 +21,7 @@ export class TuningDropdownComponent {
     constructor(private lair: LairService) { }
 
     get tunings() {
-        return Array.from(TuningRecipes.keys());
+        return Array.from(TuningRecipes.get(this.lair.numberOfStrings)!.keys());
     }
 
     isSelected(tuning: string): boolean {
