@@ -14,7 +14,6 @@ export class FretboardComponent {
 
     @ViewChild('fretboard_canvas', { static: true }) canvas!: ElementRef<HTMLCanvasElement>;
     private ctx!: CanvasRenderingContext2D;
-    private flipped = false;
     private subs: Subscription[] = []
 
     @HostListener('window:resize', ['$event'])
@@ -77,32 +76,33 @@ export class FretboardComponent {
         canvas.width = canvas.offsetWidth;
         const ctx = this.ctx;
         const rect = canvas.getBoundingClientRect();
-        const w = rect.width; // canvas.width;
-        const h = rect.height; // canvas.height;
+        let w = rect.width; // canvas.width;
+        let h = rect.height; // canvas.height;
+        const smol = w < 600;
 
         console.log(`drawing fretboard ${w}x${h}, ${this.numberOfStrings} strings, ${this.numberOfFrets} frets, ${this.leftOrRightHanded} handed`)
 
         // Clear the canvas
         ctx.clearRect(0, 0, w, h);
-        ctx.fillStyle = "#000000ff"
-        ctx.fillRect(0, 0, w, h)
 
         // flip if left handed and not already flipped, if flipped back restore
-        if (this.leftOrRightHanded === "left" && !this.flipped) {
-            ctx.save();
+        ctx.resetTransform()
+        if (this.leftOrRightHanded === "left") {
             ctx.translate(w, 0);
             ctx.scale(-1, 1);
-            this.flipped = true;
-        } else {
-            ctx.restore();
-            this.flipped = false;
+        }
+        if (smol) {
+            ctx.translate(w, 0)
+            ctx.rotate(Math.PI / 2)
+            w = rect.height
+            h = rect.width
         }
 
         // draw frets and fret numbers
         const yPadding = h / (this.numberOfStrings + 1) / 2
         // start padding for strings
         const stringBlipPadding = yPadding * 2
-        const fretNumberPadding = yPadding * 1.5
+        const fretNumberPadding = yPadding / 2
         const fretWidth = (w - 2 * yPadding - stringBlipPadding) / (this.numberOfFrets)
         ctx.strokeStyle = "#ffffffff"
         ctx.lineCap = "round"
@@ -126,7 +126,7 @@ export class FretboardComponent {
                 ctx.textAlign = "center"
                 ctx.textBaseline = "middle"
                 ctx.fillStyle = "#ffffffff"
-                ctx.fillText(f.toString(), x, yPadding + fretNumberPadding / 2)
+                ctx.fillText(f.toString(), x, yPadding / 2 + fretNumberPadding / 2)
             }
         }
 

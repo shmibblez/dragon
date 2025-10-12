@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "github-build": "ng build --configuration=production --base-href 'https://shmibblez.github.io/dragon'",
-    "github-deploy": "npx angular-cli-ghpages --dir=dist/dragon --no-silent"
+    "github-deploy": "ng deploy --base-href=/dragon/"
   },
   "prettier": {
     "printWidth": 100,
