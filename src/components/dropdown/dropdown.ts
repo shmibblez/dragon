@@ -11,6 +11,4 @@ export class DropdownComponent {
     @Input() label!: string;
     @Input() selected: boolean = false;
     @Input() onSelect!: () => void;
-    // todo: type for popup content
-    @Input() popupContentHTML!: string;
 }

@@ -1,0 +1,3 @@
+@for (tuning of tunings; track $index) {
+<chip label="{{tuning}}" [selected]="isSelected(tuning)" (click)="onTuningSelected(tuning)"></chip>
+}

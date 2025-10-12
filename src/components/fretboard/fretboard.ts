@@ -1,7 +1,8 @@
 import { Component, ElementRef, HostListener, Input, ViewChild } from "@angular/core";
 import { isSameNote, nextNoteFlat, nextNoteSharp, Note } from "../../app/objects/note";
 import { Scale } from "../../app/objects/scale";
-import { Lair } from "../../app/services/lair";
+import { LairService } from "../../app/services/lair";
+import { Subscription } from "rxjs";
 
 @Component({
     selector: "fretboard",
@@ -9,11 +10,12 @@ import { Lair } from "../../app/services/lair";
     styleUrls: ["../../app/app.scss", "./fretboard.scss"],
 })
 export class FretboardComponent {
-    constructor(private lair: Lair) { }
+    constructor(private lair: LairService) { }
 
     @ViewChild('fretboard_canvas', { static: true }) canvas!: ElementRef<HTMLCanvasElement>;
     private ctx!: CanvasRenderingContext2D;
     private flipped = false;
+    private subs: Subscription[] = []
 
     @HostListener('window:resize', ['$event'])
     onResize(event: Event) {
@@ -22,10 +24,13 @@ export class FretboardComponent {
 
     ngOnInit() {
         // update on app state changes
-        this.lair.appState$.subscribe(() => {
-            if (!this.ctx) return
-            this.drawFretboard()
-        })
+        this.subs.push(
+            this.lair.appState$.subscribe(() => {
+                console.log("fretboard sub update")
+                if (!this.ctx) return
+                this.drawFretboard()
+            })
+        )
     }
 
     ngAfterViewInit() {
@@ -34,27 +39,31 @@ export class FretboardComponent {
     }
 
     private get leftOrRightHanded() {
-        return this.lair.appState.getValue().leftOrRightHanded();
+        return this.lair.leftOrRightHanded;
     }
 
     private get numberOfStrings() {
-        return this.lair.appState.getValue().numberOfStrings();
+        return this.lair.numberOfStrings;
     }
 
     private get numberOfFrets() {
-        return this.lair.appState.getValue().numberOfFrets();
+        return this.lair.numberOfFrets;
     }
 
     private get tuning() {
-        return this.lair.appState.getValue().tuning();
+        return this.lair.tuning;
     }
 
     private get scale() {
-        return this.lair.appState.getValue().scale();
+        return this.lair.scale;
+    }
+
+    private get rootNote() {
+        return this.lair.rootNote;
     }
 
     private get noteType() {
-        return this.lair.appState.getValue().noteType();
+        return this.lair.noteType;
     }
 
     /**
@@ -93,7 +102,7 @@ export class FretboardComponent {
         const yPadding = h / (this.numberOfStrings + 1) / 2
         // start padding for strings
         const stringBlipPadding = yPadding * 2
-        const fretNumberPadding = yPadding
+        const fretNumberPadding = yPadding * 1.5
         const fretWidth = (w - 2 * yPadding - stringBlipPadding) / (this.numberOfFrets)
         ctx.strokeStyle = "#ffffffff"
         ctx.lineCap = "round"
@@ -113,7 +122,7 @@ export class FretboardComponent {
             ctx.stroke()
             // draw fret number
             if (f > 0) {
-                ctx.font = `${yPadding / 2}px Arial`
+                ctx.font = `${yPadding / 1.5}px Arial`
                 ctx.textAlign = "center"
                 ctx.textBaseline = "middle"
                 ctx.fillStyle = "#ffffffff"
@@ -139,13 +148,13 @@ export class FretboardComponent {
         const blipRadius = yPadding / 2
         ctx.textAlign = "center"
         ctx.textBaseline = "middle"
-        ctx.font = `${blipRadius}px Arial`
-        const notes = this.scale.getNotes();
+        ctx.font = `${blipRadius * 1.25}px Arial`
+        const notes = this.scale.getNotes(this.rootNote);
         // start at lowest string, go to highest
         for (let s = 0; s < this.numberOfStrings; s++) {
             // start at fret 0, go to highest
             // get note at string s, fret f
-            let note = this.tuning[s]
+            let note = this.tuning.notes[s]
             for (let f = 0; f <= this.numberOfFrets; f++) {
                 // if note in scale, draw blip
                 const noteInScale = notes.indexOf(note) >= 0
@@ -155,7 +164,7 @@ export class FretboardComponent {
                     ctx.beginPath()
                     ctx.arc(x, y, blipRadius, 0, 2 * Math.PI)
                     // if root note background is different
-                    if (isSameNote(this.scale.root, note)) {
+                    if (isSameNote(this.rootNote, note)) {
                         ctx.fillStyle = "#cc0000ff"
                     } else if (noteInScale) {
                         ctx.fillStyle = "#ffaaaaff"

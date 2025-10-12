@@ -1,0 +1,3 @@
+@for(scale of scales; track $index) {
+    <chip label="{{scale}}" [selected]="isSelected(scale)" (click)="onDefaultScaleSelected(scale)"></chip>
+}

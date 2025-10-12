@@ -1,0 +1,18 @@
+<div id="prefs">
+    <!-- tuning prefs -->
+    <dropdown label="Tuning" (click)="tuningPrefSelected($event)" [selected]="selectedOption() === 'tuning'" >
+        <tuningDropdown [onTuningSelected]="onTuningSelected">
+        </tuningDropdown>
+    </dropdown>
+    <!-- number of strings -->
+    <dropdown label="Strings" (click)="stringsPrefSelected($event)" [selected]="selectedOption() === 'strings'">
+        <chip label="4" [selected]="false"></chip>
+        <chip label="5" [selected]="false"></chip>
+        <chip label="6" [selected]="false"></chip>
+        <chip label="7" [selected]="false"></chip>
+        <chip label="8" [selected]="false"></chip>
+    </dropdown>
+    <dropdown label="Scale" (click)="scalesPrefSelected($event)" [selected]="selectedOption() === 'scales'">
+        <scaleDropdown></scaleDropdown>
+    </dropdown>
+</div>

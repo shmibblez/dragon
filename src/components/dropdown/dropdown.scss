@@ -1,16 +1,13 @@
-.selected {
-    background-color: #f44f !important;
-}
-
 #dropdown {
     width: auto;
-    height: auto;
+    height: min-content;
     background-color: #222f;
-    border-radius: 1vw;
+    border-radius: 100vw;
     position: relative;
-    margin: 1vw;
-    padding: 1vw;
+    margin: 1vw 0.5vw 0 0.5vw;
+    padding: 1.5vw;
     color: white;
+    // line-height: 0cm;
 }
 
 #dropdown:hover {
@@ -18,16 +15,22 @@
     cursor: pointer;
 }
 
+.selected {
+    background-color: #f44f !important;
+}
+
 #popup-content {
     margin-top: 1vw;
     width: 25vw;
     height: auto;
     padding: 1vw;
-    background-color: lightblue;
+    background-color: #222f;
     border-radius: 2vw;
     position: absolute;
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
     color: white;
+    line-height: 1.5em;
+    display: block;
 }

@@ -1,0 +1,28 @@
+.chip {
+    border-radius: 100vw;
+    background-color: #444f;
+    color: white;
+    padding: 1vw;
+    margin: 0.5vw;
+    display: inline-block;
+    border: 2px solid #444f;
+}
+
+.chip:hover {
+    // background-color: #f44f;
+    color: #f44f;
+    cursor: pointer;
+    border: 2px solid #f44f;
+}
+
+.chip.selected {
+    // background-color: #f44f !important;
+    color: #f44f !important;
+    border: 2px solid #444f;
+}
+
+.chip.selected:hover {
+    // background-color: #444f;
+    color: white;
+    border: 2px solid #444f;
+}
