@@ -1,6 +1,6 @@
 # Dragon
 
-Dragon is a scale chart creation tool
+Dragon is a scale chart creation tool, [go to website](https://shmibblez.github.io/dragon/)
 
 ## Why
 
@@ -10,32 +10,31 @@ I was trying to learn the blues scale with drop D tuning but couldn't find a sca
 
 # Global TODO
 
-- parent site html, options and fretboard below
-  - set min width and height, only desktop screen for now
-  - add phone screen support in future, make fretboard vertical, size based on screen size
-- fretboard layout (guitars usually have 24 frets max)
-  - have fretboard update based on user prefs and resize events
-    - sharp or flat, colors (v2), scale notes, etc.
-  - add fretboard html (sizing, child canvas element that fills parent)
-  - 
-- add more scales and make sure current ones are correct
-  - add tuning options
-  - add string options (6, 7, or 8 for guitar, maybe 4 or 5 for ukuleles)
-- general layout
-  - options dropdwns at the top horizontally
-    - root note dropdown grid (when minimized shows note/letter)
-    - scale dropdown
-      - defaults list, custom checkbox at the top
-        - when minimized shows scale name
-        - if custom minimized text is "Custom"
-          - when expanded shows interval multiselect grid
-    - left or right handed option
-    - color palette dropdown (v2, v1 will have dark mode defaults)
-      - ui component selection bubbles at the top, color wheel with rgb at the bottom, user can click to select or enter manually
-        - edit background, blip root, blip text root, string colors, fret colors, fretboard color, fretboard marker colors, etc.
+- custom menu options
+  - tunings
+    - menu with First String, Second String, etc headers
+    - each sub heading has chips for all notes, one selected in each
+  - custom scales
+    - custom chip at top
+      - when not selected & default selected: normal, show default tunings available
+      - when selected:
+        - default tunings not visible
+        - replaced by list of interval chips
+        - multiple chips can be selected or deselected
+        - text box between top custom chip (separator below) and interval chips below
+- options
+  - sharp or flat
+  - low string top or bottom
+  - color palette dropdown (v2, v1 will have dark mode defaults)
+    - ui component selection bubbles at the top, color wheel with rgb at the bottom, user can click to select or enter manually
+    - edit background, blip root, blip text root, string colors, fret colors, fretboard color, fretboard marker colors, etc.
     - use sharp or flat notes selector
-  - fretboard below, reflects selected config
-
+- scales
+  - make sure current ones are correct (double check, they _should_ be ok)
+  - add more scales, japanese scale, other cool scales, etc
+- tuning
+  - more 4 and 5 string tunings for bass
+  - 
 ## Development server
 
 To start a local development server, run:
