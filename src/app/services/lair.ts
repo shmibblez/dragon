@@ -32,6 +32,10 @@ export class LairService {
     return this.appState.getValue().numberOfStrings
   }
 
+  get thiccStringLocation() {
+    return this.appState.getValue().thiccStringLocation
+  }
+
   get leftOrRightHanded() {
     return this.appState.getValue().leftOrRightHanded
   }
@@ -71,6 +75,7 @@ export interface Lair {
   tuning: Tuning;
   numberOfFrets: number;
   numberOfStrings: NumberOfStrings;
+  thiccStringLocation: "top" | "bottom";
   leftOrRightHanded: "left" | "right";
   noteType: "sharp" | "flat";
 }
@@ -81,8 +86,9 @@ const DEFAULT_LAIR: Lair = {
   rootNote: "C",
   // guitar tuning
   tuning: TuningRecipes.get(6)!.get("Standard")!,
-  numberOfFrets: 24,
+  numberOfFrets: 14,
   numberOfStrings: 6,
+  thiccStringLocation: "bottom",
   leftOrRightHanded: "right",
   noteType: "sharp",
 }

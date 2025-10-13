@@ -37,11 +37,27 @@ export class Scale {
  * todo: review and add more scales, these were autocompleted
  */
 export const ScaleRecipes: Map<string, Scale> = new Map([
-    ["Major", new Scale("Major", ["p1", "M2", "P4", "P5", "M6", "P8"], true)],
-    ["Minor", new Scale("Minor", ["p1", "m2", "P4", "P5", "m6", "P8"], true)],
-    ["Harmonic Minor", new Scale("Harmonic Minor", ["p1", "m2", "P4", "P5", "m6", "P8"], true)],
-    ["Melodic Minor", new Scale("Melodic Minor", ["p1", "M2", "P4", "P5", "M6", "P8"], true)],
-    ["Pentatonic Major", new Scale("Pentatonic Major", ["p1", "M2", "P4", "P5", "P8"], true)],
-    ["Pentatonic Minor", new Scale("Pentatonic Minor", ["p1", "m2", "P4", "P5", "P8"], true)],
-    ["Blues", new Scale("Blues", ["p1", "m2", "P4", "P5", "m6", "P8"], true)],
+    // w = whole step, h = half step
+    // stolen from [here](https://muted.io/scale-formulas-intervals/)
+    // Major: w w h w w w h
+    ["Major", new Scale("Major", ["p1", "M2", "M3", "P4", "P5", "M6", "M7", "P8"], true)],
+    // Minor / Natural Minor: w h w w h w w
+    ["Minor", new Scale("Minor", ["p1", "M2", "m3", "P4", "P5", "m6", "m7", "P8"], true)],
+    /*----- VERIFIED UP TO HERE (compared with existing charts to make sure intervals not shifted) -----*/
+    // Melodic minor: w h w w w w h
+    ["Melodic Minor", new Scale("Melodic Minor", ["p1", "M2", "m3", "P4", "P5", "M6", "M7", "P8"], true)],
+    // Harmonic Minor: w h w w h (w+h) h
+    ["Harmonic Minor", new Scale("Harmonic Minor", ["p1", "M2", "m3", "P4", "P5", "m6", "M7", "P8"], true)],
+    // Dorian Scale: w h w w w h w
+    ["Dorian", new Scale("Dorian", ["p1", "M2", "m3", "P4", "P5", "M6", "m7", "P8"], true)],
+    ["Phrygian", new Scale("Phrygian", ["p1", "m2", "m3", "P4", "P5", "m6", "m7", "P8"], true)],
+    ["Lydian", new Scale("Lydian", ["p1", "M2", "M3", "A4", "P5", "M6", "M7", "P8"], true)],
+    ["Mixolydian", new Scale("Mixolydian", ["p1", "M2", "M3", "P4", "P5", "M6", "m7", "P8"], true)],
+    ["Locrian", new Scale("Locrian", ["p1", "m2", "m3", "P4", "A4", "m6", "m7", "P8"], true)],
+    ["Minor Pentatonic", new Scale("Minor Pentatonic", ["p1", "m3", "P4", "P5", "m7", "P8"], true)],
+    ["Major Pentatonic", new Scale("Major Pentatonic", ["p1", "M2", "M3", "P5", "M6", "P8"], true)],
+    ["Major Blues", new Scale("Major Blues", ["p1", "M2", "m3", "M3", "P5", "M6", "P8"], true)],
+    ["Minor Blues", new Scale("Minor Blues", ["p1", "m3", "P4", "A4", "P5", "m7", "P8"], true)],
+    ["Augmented", new Scale("Augmented", ["p1", "m3", "M3", "P5", "m6", "M7", "P8"], true)],
+    ["Diminished", new Scale("Diminished", ["p1", "M2", "m3", "P4", "A4", "m6", "M6", "M7", "P8"], true)],
 ]);

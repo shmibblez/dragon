@@ -37,6 +37,10 @@ export class FretboardComponent {
         this.drawFretboard()
     }
 
+    private get thiccStringLocation() {
+        return this.lair.thiccStringLocation;
+    }
+
     private get leftOrRightHanded() {
         return this.lair.leftOrRightHanded;
     }
@@ -71,6 +75,8 @@ export class FretboardComponent {
      * TODO: flip horizontally if left handed
      */
     private drawFretboard() {
+        const fontFamily = "Courier"
+        const fontWeight = "700"
         const canvas = this.canvas.nativeElement;
         canvas.height = canvas.offsetHeight;
         canvas.width = canvas.offsetWidth;
@@ -101,41 +107,57 @@ export class FretboardComponent {
         // draw frets and fret numbers
         const yPadding = h / (this.numberOfStrings + 1) / 2
         // start padding for strings
-        const stringBlipPadding = yPadding * 2
-        const fretNumberPadding = yPadding / 2
+        const stringBlipPadding = yPadding
+        const fretNumberPadding = yPadding
         const fretWidth = (w - 2 * yPadding - stringBlipPadding) / (this.numberOfFrets)
-        ctx.strokeStyle = "#ffffffff"
-        ctx.lineCap = "round"
         // for each fret number f
         for (let f = 0; f <= this.numberOfFrets; f++) {
+            ctx.lineCap = "round"
             const y0 = yPadding + fretNumberPadding
             const y1 = h - yPadding
             const x = yPadding + stringBlipPadding + fretWidth * f
-            if (f === 0) {
-                ctx.lineWidth = 10
-            } else {
-                ctx.lineWidth = 1
-            }
-            // draw fret
-            ctx.moveTo(x, y0)
-            ctx.lineTo(x, y1)
-            ctx.stroke()
+
             // draw fret number
             if (f > 0) {
-                ctx.font = `${yPadding / 1.5}px Arial`
+                // stroke
+                ctx.lineWidth = 3
+                // font
+                ctx.font = `${fontWeight} ${yPadding / 1.5}px ${fontFamily}`
                 ctx.textAlign = "center"
                 ctx.textBaseline = "middle"
-                ctx.fillStyle = "#ffffffff"
-                ctx.fillText(f.toString(), x, yPadding / 2 + fretNumberPadding / 2)
+                ctx.beginPath()
+                if (f % 12 === 0) {
+                    console.log("red stroke")
+                    // fret #12 special
+                    ctx.fillStyle = "#ff000099"
+                    ctx.strokeStyle = "#ff000099"
+                } else {
+                    // other frets normal
+                    ctx.fillStyle = "#ffffff99"
+                    ctx.strokeStyle = "#ffffff99"
+                }
+                ctx.fillText(f.toString(), x - fretWidth/2, yPadding / 2 + fretNumberPadding / 2)
+                // draw fret
+                ctx.moveTo(x, y0)
+                ctx.lineTo(x, y1)
+                ctx.stroke()
+            } else {
+                // first fret thicker
+                ctx.lineWidth = 10
+                ctx.strokeStyle = "#ffffffff"
+                // draw fret
+                ctx.moveTo(x, y0)
+                ctx.lineTo(x, y1)
+                ctx.stroke()
             }
         }
 
         // draw strings
         const stringSpacing = (h - 2 * yPadding - fretNumberPadding) / (this.numberOfStrings - 1)
-        ctx.lineWidth = 2
-        ctx.strokeStyle = "#ffffffff"
         // for each string number s
         for (let s = 0; s < this.numberOfStrings; s++) {
+            ctx.lineWidth = 2
+            ctx.strokeStyle = "#ffffffff"
             const y = yPadding + fretNumberPadding + s * stringSpacing
             const x0 = yPadding + stringBlipPadding
             const x1 = w - yPadding
@@ -148,7 +170,7 @@ export class FretboardComponent {
         const blipRadius = yPadding / 2
         ctx.textAlign = "center"
         ctx.textBaseline = "middle"
-        ctx.font = `${blipRadius * 1.25}px Arial`
+        ctx.font = `${fontWeight} ${blipRadius * 1.25}px ${fontFamily}`
         const notes = this.scale.getNotes(this.rootNote);
         // start at lowest string, go to highest
         for (let s = 0; s < this.numberOfStrings; s++) {
@@ -159,8 +181,10 @@ export class FretboardComponent {
                 // if note in scale, draw blip
                 const noteInScale = notes.indexOf(note) >= 0
                 if (noteInScale || f === 0) {
-                    const y = yPadding + fretNumberPadding + s * stringSpacing
-                    const x = f === 0 ? yPadding + stringBlipPadding / 2 : yPadding + stringBlipPadding + fretWidth * f - fretWidth / 2;
+                    const y = this.thiccStringLocation == "top"
+                        ? (yPadding + fretNumberPadding + s * stringSpacing)
+                        : (h - yPadding - s * stringSpacing);
+                    const x = f === 0 ? yPadding  : yPadding + stringBlipPadding + fretWidth * f - fretWidth / 2;
                     ctx.beginPath()
                     ctx.arc(x, y, blipRadius, 0, 2 * Math.PI)
                     // if root note background is different
