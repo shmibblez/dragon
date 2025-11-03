@@ -78,13 +78,16 @@ export class FretboardComponent {
         const fontFamily = "Courier"
         const fontWeight = "700"
         const canvas = this.canvas.nativeElement;
-        canvas.height = canvas.offsetHeight;
-        canvas.width = canvas.offsetWidth;
         const ctx = this.ctx;
+        const scale = 3; // canvas upscaling, was lookin crummy b4
+        // canvas.style.width = w + "px"
+        // canvas.style.height = h + "px"
+        canvas.height = canvas.offsetHeight * scale;
+        canvas.width = canvas.offsetWidth * scale;
         const rect = canvas.getBoundingClientRect();
-        let w = rect.width; // canvas.width;
-        let h = rect.height; // canvas.height;
-        const smol = w < 600;
+        let w = rect.width * scale; // canvas.width;
+        let h = rect.height * scale; // canvas.height;
+        const smol = w < 600 * scale;
 
         console.log(`drawing fretboard ${w}x${h}, ${this.numberOfStrings} strings, ${this.numberOfFrets} frets, ${this.leftOrRightHanded} handed`)
 
@@ -100,8 +103,8 @@ export class FretboardComponent {
         if (smol) {
             ctx.translate(w, 0)
             ctx.rotate(Math.PI / 2)
-            w = rect.height
-            h = rect.width
+            w = rect.height * scale
+            h = rect.width * scale
         }
 
         // draw frets and fret numbers
@@ -136,7 +139,7 @@ export class FretboardComponent {
                     ctx.fillStyle = "#ffffff99"
                     ctx.strokeStyle = "#ffffff99"
                 }
-                ctx.fillText(f.toString(), x - fretWidth/2, yPadding / 2 + fretNumberPadding / 2)
+                ctx.fillText(f.toString(), x - fretWidth / 2, yPadding / 2 + fretNumberPadding / 2)
                 // draw fret
                 ctx.moveTo(x, y0)
                 ctx.lineTo(x, y1)
@@ -184,7 +187,7 @@ export class FretboardComponent {
                     const y = this.thiccStringLocation == "top"
                         ? (yPadding + fretNumberPadding + s * stringSpacing)
                         : (h - yPadding - s * stringSpacing);
-                    const x = f === 0 ? yPadding  : yPadding + stringBlipPadding + fretWidth * f - fretWidth / 2;
+                    const x = f === 0 ? yPadding : yPadding + stringBlipPadding + fretWidth * f - fretWidth / 2;
                     ctx.beginPath()
                     ctx.arc(x, y, blipRadius, 0, 2 * Math.PI)
                     // if root note background is different

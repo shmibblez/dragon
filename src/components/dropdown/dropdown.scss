@@ -12,6 +12,11 @@
         // line-height: 0cm;
     }
 
+    #dropdown p {
+        font-size: 4vw;
+        line-height: 0;
+    }
+
     #popup-wrapper {
         z-index: 1;
         width: 50vw;
@@ -54,6 +59,10 @@
         padding: 1.5vw;
         color: white;
         // line-height: 0cm;
+    }
+
+    #dropdown p {
+        font-size: 2vw;
     }
 
     #popup-wrapper {
