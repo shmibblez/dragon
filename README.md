@@ -10,6 +10,9 @@ I was trying to learn the blues scale with drop D tuning but couldn't find a sca
 
 # Global TODO
 
+- change menu layout:
+  -  make sheet that expands when option selected, add button somewhere to hide sheet (make inline)
+  -  add animation to sheet expanding and shrinking, make border around prefs that houses option content
 - custom menu options
   - tunings
     - menu with First String, Second String, etc headers
