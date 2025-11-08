@@ -5,11 +5,9 @@
         height: auto;
         background-color: #222f;
         border-radius: 100vw;
-        // position: relative;
-        margin: 2mm 1mm 0 1mm;
-        padding: 2.5mm;
+        padding: 1.5vw;
+        margin: 2.5mm 0 2.5mm 0;
         color: white;
-        // line-height: 0cm;
     }
 
     #dropdown p {
@@ -53,16 +51,14 @@
         width: auto;
         height: min-content;
         background-color: #222f;
-        border-radius: 100vw;
-        position: relative;
-        margin: 1vw 0.5vw 0 0.5vw;
         padding: 1.5vw;
+        margin: 1vw 0 1vw 0;
         color: white;
-        // line-height: 0cm;
     }
 
     #dropdown p {
-        font-size: 2vw;
+        font-size: min(3vw, 1.5em);
+        line-height: 0;
     }
 
     #popup-wrapper {
@@ -88,6 +84,15 @@
         flex-wrap: wrap;
         align-items: center;
     }
+}
+
+#dropdown {
+    border-radius: 100vw;
+}
+
+#dropdown p {
+    display: inline;
+    white-space: nowrap;
 }
 
 #dropdown:hover {

@@ -79,7 +79,7 @@ export class FretboardComponent {
         const fontWeight = "700"
         const canvas = this.canvas.nativeElement;
         const ctx = this.ctx;
-        const scale = 3; // canvas upscaling, was lookin crummy b4
+        const scale = 4; // canvas upscaling, was lookin crummy b4
         // canvas.style.width = w + "px"
         // canvas.style.height = h + "px"
         canvas.height = canvas.offsetHeight * scale;
@@ -115,7 +115,7 @@ export class FretboardComponent {
         const fretWidth = (w - 2 * yPadding - stringBlipPadding) / (this.numberOfFrets)
         // for each fret number f
         for (let f = 0; f <= this.numberOfFrets; f++) {
-            ctx.lineCap = "round"
+            ctx.lineCap = "square"
             const y0 = yPadding + fretNumberPadding
             const y1 = h - yPadding
             const x = yPadding + stringBlipPadding + fretWidth * f
@@ -123,7 +123,7 @@ export class FretboardComponent {
             // draw fret number
             if (f > 0) {
                 // stroke
-                ctx.lineWidth = 3
+                ctx.lineWidth = 4
                 // font
                 ctx.font = `${fontWeight} ${yPadding / 1.5}px ${fontFamily}`
                 ctx.textAlign = "center"
@@ -159,7 +159,7 @@ export class FretboardComponent {
         const stringSpacing = (h - 2 * yPadding - fretNumberPadding) / (this.numberOfStrings - 1)
         // for each string number s
         for (let s = 0; s < this.numberOfStrings; s++) {
-            ctx.lineWidth = 2
+            ctx.lineWidth = 4
             ctx.strokeStyle = "#ffffffff"
             const y = yPadding + fretNumberPadding + s * stringSpacing
             const x0 = yPadding + stringBlipPadding

@@ -28,6 +28,7 @@ export class PrefsComponent {
         const clickedInside = this.elementRef.nativeElement.contains(targetElement);
         if (!clickedInside) {
             this.selectedOption.set(null)
+            this.updateUi(false)
         }
     }
 
@@ -39,24 +40,48 @@ export class PrefsComponent {
         return isSameNote(n, this.lair.rootNote)
     }
 
+    @HostListener('window:resize', ['$event'])
+    onResize(event: Event) {
+        this.updateUi(this.selectedOption() !== null)
+    }
+
+    updateUi(prefShown: boolean = true) {
+        const prefElement = this.elementRef.nativeElement.querySelector("#prefs");
+        const dropdownContentElement = this.elementRef.nativeElement.querySelector("#dropdown-content")
+        // update borders if pref shown
+        const br = window.innerWidth < 600 ? "max(5vw, 7.5mm)": "min(3.5vw, 14mm)"
+        if (prefElement) {
+            prefElement.style.borderRadius = prefShown ? `${br} ${br} 0 0` : br;
+            prefElement.style.borderBottom = prefShown ? "none" : "2px solid white";
+            prefElement.style.paddingBottom = prefShown ? "2px" : "0";
+        }
+        if (dropdownContentElement) {
+            dropdownContentElement.style.borderRadius = prefShown ? `0 0 ${br} ${br}` : br;
+        }
+    }
+
     stringsPrefSelected(event: PointerEvent) {
         this.selectedOption.set("strings");
         event.stopPropagation();
+        this.updateUi();
     }
 
     tuningPrefSelected(event: PointerEvent) {
         this.selectedOption.set("tuning");
         event.stopPropagation();
+        this.updateUi();
     }
 
     scalesPrefSelected(event: PointerEvent) {
         this.selectedOption.set("scales");
         event.stopPropagation();
+        this.updateUi();
     }
 
     rootPrefSelected(event: PointerEvent) {
         this.selectedOption.set("root");
         event.stopPropagation();
+        this.updateUi();
     }
 
     onTuningSelected(tuning: string) {

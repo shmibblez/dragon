@@ -1,14 +1,51 @@
+#prefs {
+    margin: 1vw;
+    border: 2px solid white;
+    position: relative;
+    z-index: 3;
+    display: flex;
+    gap: 1vw;
+    box-sizing: content-box;
+    background-color: #000f;
+    // box-sizing: border-box;
+}
+
+#dropdown-content {
+    z-index: -1;
+    width: calc(100% + 4px);
+    height: auto;
+    background-color: #000f;
+    border: 2px solid white;
+    border-radius: inherit;
+    position: absolute;
+    // transform: translateX(-50%);
+    top: 100%;
+    left: -2px;
+    color: white;
+    line-height: 1.5em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0 1vw 1vw 1vw;
+    box-sizing: border-box;
+    border-top: none;
+}
+
 // phone or tablet
 @media only screen and (max-width: 600px) {
     #prefs {
-    width: auto;
-    height: auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-}
+        width: auto;
+        height: auto;
+        display: flex;
+        flex-direction: row;
+        row-gap: 0;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        border-radius: max(5vw, 7.5mm);
+        padding: 0 2.5mm 0 2.5mm;
+    }
 }
 
 // desktop
@@ -20,5 +57,7 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
+        border-radius: min(3.5vw, 14mm);
+        padding: 0 1vw 0 1vw;
     }
 }

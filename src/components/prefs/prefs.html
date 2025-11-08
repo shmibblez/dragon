@@ -1,22 +1,30 @@
 <div id="prefs">
     <!-- number of strings -->
-    <dropdown label="Strings" (click)="stringsPrefSelected($event)" [selected]="selectedOption() === 'strings'">
-        @for (n of stringNumbers; track $index) {
-            <chip [label]="n.toString()" [selected]="numberOfStrings === n" (click)="onStringsSelected(n)"></chip>
-        }
-    </dropdown>
+    <dropdown label="Strings" (click)="stringsPrefSelected($event)" [selected]="selectedOption() === 'strings'"/>
     <!-- tuning prefs -->
-    <dropdown label="Tuning" (click)="tuningPrefSelected($event)" [selected]="selectedOption() === 'tuning'" >
+    <dropdown label="Tuning" (click)="tuningPrefSelected($event)" [selected]="selectedOption() === 'tuning'"/>
+    <!-- root note -->
+    <dropdown label="Root Note" (click)="rootPrefSelected($event)" [selected]="selectedOption() === 'root'"/>
+    <dropdown label="Scale" (click)="scalesPrefSelected($event)" [selected]="selectedOption() === 'scales'"/>
+    <div id="dropdown-content" [style.display]="(selectedOption() !== null) ? 'flex' : 'none'">
+        @switch (selectedOption()) {
+        @case ('strings') {
+        @for (n of stringNumbers; track $index) {
+        <chip [label]="n.toString()" [selected]="numberOfStrings === n" (click)="onStringsSelected(n)"></chip>
+        }
+        }
+        @case ('tuning') {
         <tuningDropdown [onTuningSelected]="onTuningSelected">
         </tuningDropdown>
-    </dropdown>
-    <!-- root note -->
-    <dropdown label="Root Note" (click)="rootPrefSelected($event)" [selected]="selectedOption() === 'root'">
-        @for (n of notes; track $index) {
-            <chip [label]="n.toString()" [selected]="isNoteRoot(n)" (click)="onRootSelected(n)"></chip>
         }
-    </dropdown>
-    <dropdown label="Scale" (click)="scalesPrefSelected($event)" [selected]="selectedOption() === 'scales'">
+        @case ('root') {
+        @for (n of notes; track $index) {
+        <chip [label]="n.toString()" [selected]="isNoteRoot(n)" (click)="onRootSelected(n)"></chip>
+        }
+        }
+        @case ('scales') {
         <scaleDropdown></scaleDropdown>
-    </dropdown>
+        }
+        }
+    </div>
 </div>
