@@ -1,29 +1,32 @@
 <div id="prefs">
     <!-- number of strings -->
-    <dropdown label="Strings" (click)="stringsPrefSelected($event)" [selected]="selectedOption() === 'strings'"/>
+    <dropdown label="Strings" (click)="stringsPrefSelected($event)" [selected]="selectedOption() === 'strings'" />
     <!-- tuning prefs -->
-    <dropdown label="Tuning" (click)="tuningPrefSelected($event)" [selected]="selectedOption() === 'tuning'"/>
+    <dropdown label="Tuning" (click)="tuningPrefSelected($event)" [selected]="selectedOption() === 'tuning'" />
     <!-- root note -->
-    <dropdown label="Root Note" (click)="rootPrefSelected($event)" [selected]="selectedOption() === 'root'"/>
-    <dropdown label="Scale" (click)="scalesPrefSelected($event)" [selected]="selectedOption() === 'scales'"/>
+    <dropdown label="Root Note" (click)="rootPrefSelected($event)" [selected]="selectedOption() === 'root'" />
+    <dropdown label="Scale" (click)="scalesPrefSelected($event)" [selected]="selectedOption() === 'scales'" />
+    <dropdown label="Layout" (click)="layoutPrefSelected($event)" [selected]="selectedOption() === 'layout'" />
     <div id="dropdown-content" [style.display]="(selectedOption() !== null) ? 'flex' : 'none'">
         @switch (selectedOption()) {
         @case ('strings') {
         @for (n of stringNumbers; track $index) {
-        <chip [label]="n.toString()" [selected]="numberOfStrings === n" (click)="onStringsSelected(n)"></chip>
+        <chip [label]="n.toString()" [selected]="numberOfStrings === n" (click)="onStringsSelected(n)" />
         }
         }
         @case ('tuning') {
-        <tuningDropdown [onTuningSelected]="onTuningSelected">
-        </tuningDropdown>
+        <tuningDropdown [onTuningSelected]="onTuningSelected" />
         }
         @case ('root') {
         @for (n of notes; track $index) {
-        <chip [label]="n.toString()" [selected]="isNoteRoot(n)" (click)="onRootSelected(n)"></chip>
+        <chip [label]="n.toString()" [selected]="isNoteRoot(n)" (click)="onRootSelected(n)" />
         }
         }
         @case ('scales') {
-        <scaleDropdown></scaleDropdown>
+        <scaleDropdown />
+        }
+        @case ('layout') {
+        <layoutDropdown />
         }
         }
     </div>

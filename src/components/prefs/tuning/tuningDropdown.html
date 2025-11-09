@@ -1,3 +1,12 @@
+<chip label="Custom" [selected]="isTuningCustom()" (click)="onCustomTuningClicked()" />
+@if(!isTuningCustom()) {
 @for (tuning of tunings; track $index) {
 <chip label="{{tuning}}" [selected]="isSelected(tuning)" (click)="onTuningSelected(tuning)"></chip>
+}
+} @else {
+<div id="note-selection-bars">
+    @for (note of stringNotes; track $index) {
+    <selectionBar label="String {{stringNotes.length - $index}} ({{note}}):" [items]="allSharpNotes" [selectedItem]="note" [onSelectItem]="onCustomTuningNoteSelected($index)" />
+    }
+</div>
 }

@@ -7,14 +7,15 @@ import { LairService } from "../../app/services/lair";
 import { ScaleRecipes } from "../../app/objects/scale";
 import { ScaleDropdownComponent } from "./scale/scaleDropdown";
 import { allNotesWithSharps, isSameNote, Note } from "../../app/objects/note";
+import { LayoutDropdownComponent } from "./layout/layoutDropdown";
 
-type pref = "strings" | "tuning" | "scales" | "root" | null;
+type pref = "strings" | "tuning" | "scales" | "root" | "layout" | null;
 
 @Component({
     selector: "prefs",
     templateUrl: "./prefs.html",
     styleUrls: ["../../app/app.scss", "./prefs.scss"],
-    imports: [DropdownComponent, ChipComponent, TuningDropdownComponent, ScaleDropdownComponent],
+    imports: [DropdownComponent, ChipComponent, TuningDropdownComponent, ScaleDropdownComponent, LayoutDropdownComponent],
 })
 export class PrefsComponent {
     selectedOption: WritableSignal<pref> = signal(null);
@@ -53,7 +54,7 @@ export class PrefsComponent {
         if (prefElement) {
             prefElement.style.borderRadius = prefShown ? `${br} ${br} 0 0` : br;
             prefElement.style.borderBottom = prefShown ? "none" : "2px solid white";
-            prefElement.style.paddingBottom = prefShown ? "2px" : "0";
+            prefElement.style.paddingBottom = prefShown ? "calc(2px + 1vw)" : "1vw";
         }
         if (dropdownContentElement) {
             dropdownContentElement.style.borderRadius = prefShown ? `0 0 ${br} ${br}` : br;
@@ -80,6 +81,12 @@ export class PrefsComponent {
 
     rootPrefSelected(event: PointerEvent) {
         this.selectedOption.set("root");
+        event.stopPropagation();
+        this.updateUi();
+    }
+
+    layoutPrefSelected(event: PointerEvent) {
+        this.selectedOption.set("layout");
         event.stopPropagation();
         this.updateUi();
     }

@@ -1,6 +1,5 @@
 import { Component, ElementRef, HostListener, Input, ViewChild } from "@angular/core";
 import { isSameNote, nextNoteFlat, nextNoteSharp, Note } from "../../app/objects/note";
-import { Scale } from "../../app/objects/scale";
 import { LairService } from "../../app/services/lair";
 import { Subscription } from "rxjs";
 
@@ -88,6 +87,7 @@ export class FretboardComponent {
         let w = rect.width * scale; // canvas.width;
         let h = rect.height * scale; // canvas.height;
         const smol = w < 600 * scale;
+        const lefty = this.leftOrRightHanded === "left"
 
         console.log(`drawing fretboard ${w}x${h}, ${this.numberOfStrings} strings, ${this.numberOfFrets} frets, ${this.leftOrRightHanded} handed`)
 
@@ -96,10 +96,10 @@ export class FretboardComponent {
 
         // flip if left handed and not already flipped, if flipped back restore
         ctx.resetTransform()
-        if (this.leftOrRightHanded === "left") {
-            ctx.translate(w, 0);
-            ctx.scale(-1, 1);
-        }
+        // if (lefty) {
+        //     ctx.translate(w, 0);
+        //     ctx.scale(-1, 1);
+        // }
         if (smol) {
             ctx.translate(w, 0)
             ctx.rotate(Math.PI / 2)
@@ -118,7 +118,9 @@ export class FretboardComponent {
             ctx.lineCap = "square"
             const y0 = yPadding + fretNumberPadding
             const y1 = h - yPadding
-            const x = yPadding + stringBlipPadding + fretWidth * f
+            const x = lefty ?
+                w - (yPadding + stringBlipPadding + fretWidth * f) :
+                (yPadding + stringBlipPadding + fretWidth * f)
 
             // draw fret number
             if (f > 0) {
@@ -139,7 +141,10 @@ export class FretboardComponent {
                     ctx.fillStyle = "#ffffff99"
                     ctx.strokeStyle = "#ffffff99"
                 }
-                ctx.fillText(f.toString(), x - fretWidth / 2, yPadding / 2 + fretNumberPadding / 2)
+                const textOffset = lefty ?
+                    x + fretWidth / 2 :
+                    x - fretWidth / 2;
+                ctx.fillText(f.toString(), textOffset, yPadding / 2 + fretNumberPadding / 2)
                 // draw fret
                 ctx.moveTo(x, y0)
                 ctx.lineTo(x, y1)
@@ -162,8 +167,10 @@ export class FretboardComponent {
             ctx.lineWidth = 4
             ctx.strokeStyle = "#ffffffff"
             const y = yPadding + fretNumberPadding + s * stringSpacing
-            const x0 = yPadding + stringBlipPadding
-            const x1 = w - yPadding
+            const x0 = lefty ?
+                w - (yPadding + stringBlipPadding) :
+                (yPadding + stringBlipPadding)
+            const x1 = lefty ? yPadding : w - yPadding
             ctx.moveTo(x0, y)
             ctx.lineTo(x1, y)
             ctx.stroke()
@@ -187,7 +194,9 @@ export class FretboardComponent {
                     const y = this.thiccStringLocation == "top"
                         ? (yPadding + fretNumberPadding + s * stringSpacing)
                         : (h - yPadding - s * stringSpacing);
-                    const x = f === 0 ? yPadding : yPadding + stringBlipPadding + fretWidth * f - fretWidth / 2;
+                    const x = lefty ?
+                        f === 0 ? w - yPadding : w - (yPadding + stringBlipPadding + fretWidth * f - fretWidth / 2) :
+                        f === 0 ? yPadding : yPadding + stringBlipPadding + fretWidth * f - fretWidth / 2;
                     ctx.beginPath()
                     ctx.arc(x, y, blipRadius, 0, 2 * Math.PI)
                     // if root note background is different

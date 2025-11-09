@@ -1,0 +1,4 @@
+<div id="layout-dropdown">
+    <selectionBar label="Fretting Hand?" [selectedItem]="leftyOrRighty()" [items]="horizontalOptions()" [onSelectItem]="changeLayoutDirection()"></selectionBar>
+    <selectionBar label="Low String Location?" [selectedItem]="fatStringLocation()" [items]="verticalOptions()" [onSelectItem]="changeFFFatStringLocation()"></selectionBar>
+</div>

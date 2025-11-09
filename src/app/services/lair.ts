@@ -3,6 +3,7 @@ import { BehaviorSubject } from "rxjs";
 import { Scale, ScaleRecipes } from "../objects/scale";
 import { Note } from "../objects/note";
 import { NumberOfStrings, Tuning, TuningRecipes } from "../objects/tuning";
+import { Interval } from "../objects/interval";
 
 /**
  * Dragon's Lair stores app state
@@ -44,6 +45,10 @@ export class LairService {
     return this.appState.getValue().noteType
   }
 
+  get strings() {
+    return Array.from({ length: this.numberOfStrings }, (_, i) => i + 1);
+  }
+
   updateRootNote(root: Note) {
     this.appState.next({ ...this.appState.getValue(), rootNote: root })
   }
@@ -58,6 +63,41 @@ export class LairService {
 
   updateNumberOfStrings(n: NumberOfStrings) {
     this.appState.next({ ...this.appState.getValue(), numberOfStrings: n, tuning: TuningRecipes.get(n)!.get("Standard")! })
+  }
+
+  updateLeftOrRightHanded(direction: "left" | "right") {
+    this.appState.next({ ...this.appState.getValue(), leftOrRightHanded: direction })
+  }
+
+  updateThiccStringLocation(location: "top" | "bottom") {
+    this.appState.next({ ...this.appState.getValue(), thiccStringLocation: location })
+  }
+
+  toggleCustomScaleInterval(interval: Interval) {
+    if (!this.appState.getValue().scale.isCustom) return;
+    const scale = this.appState.getValue().scale;
+    if (scale.intervals.includes(interval)) {
+      this.removeIntervalFromCustomScale(interval);
+    } else {
+      this.addIntervalToCustomScale(interval);
+    }
+    console.log("Toggled interval:", interval, "New intervals:", this.appState.getValue().scale.intervals);
+  }
+
+  private addIntervalToCustomScale(interval: Interval) {
+    if (!this.appState.getValue().scale.isCustom) return;
+    const scale = this.appState.getValue().scale;
+    if (scale.intervals.includes(interval)) return;
+    scale.intervals.push(interval);
+    this.appState.next({ ...this.appState.getValue(), scale: scale });
+  }
+
+  private removeIntervalFromCustomScale(interval: Interval) {
+    if (!this.appState.getValue().scale.isCustom) return;
+    let scale = this.appState.getValue().scale;
+    if (!scale.intervals.includes(interval)) return;
+    scale = new Scale("Custom", scale.intervals.filter(i => i !== interval), true);
+    this.appState.next({ ...this.appState.getValue(), scale: scale });
   }
 }
 

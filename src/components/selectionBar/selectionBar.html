@@ -1,0 +1,7 @@
+<div id="selectionBar">
+    <p class="label" [style.display]="label ? 'block' : 'none'">{{label}}</p>
+    @for(item of items; track $index) {
+    <p class="item" [class.selected]="item === selectedItem" (click)="onSelectItem(item)">{{item}}</p>
+    <!-- <div class="separator"></div> -->
+    }
+</div>

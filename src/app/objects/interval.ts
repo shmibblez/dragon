@@ -6,6 +6,23 @@ export type Interval = "p1"
     | "m7" | "M7"
     | "P8";
 
+export const allIntervals: Interval[] = [
+    "p1",
+    "m2",
+    "M2",
+    "m3",
+    "M3",
+    "P4",
+    "A4",
+    // "d5", same as A4
+    "P5",
+    "m6",
+    "M6",
+    "m7",
+    "M7",
+    // "P8", same as p1
+];
+
 export type Semitones = | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
 
 export const IntervalToSemitones: { [interval in Interval]: Semitones } = {

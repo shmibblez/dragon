@@ -1,3 +1,11 @@
+<chip label="Custom" [selected]="isCustom()" (click)="onCustomScaleClicked()" />
+@if(!isCustom()) {
 @for(scale of scales; track $index) {
-    <chip label="{{scale}}" [selected]="isSelected(scale)" (click)="onDefaultScaleSelected(scale)"></chip>
+<chip label="{{scale}}" [selected]="isSelected(scale)" (click)="onDefaultScaleSelected(scale)" />
+}
+} @else {
+    <p class="title">Intervals:</p>
+    @for(interval of allIntervals; track $index) {
+    <chip label="{{interval}}" [selected]="isIntervalSelected(interval)" (click)="onCustomIntervalClicked(interval)" />
+    }
 }

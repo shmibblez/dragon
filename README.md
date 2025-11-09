@@ -10,24 +10,14 @@ I was trying to learn the blues scale with drop D tuning but couldn't find a sca
 
 # Global TODO
 
-- change menu layout:
+- cookie support
+  - persist last selected options and defaults (currently resets to defaults)
+  - allow adding custom scales and show all saved ones (rename, delete, add custom)
+- menu layout:
   -  make sheet that expands when option selected, add button somewhere to hide sheet (make inline)
   -  add animation to sheet expanding and shrinking, make border around prefs that houses option content
-- custom menu options
-  - tunings
-    - menu with First String, Second String, etc headers
-    - each sub heading has chips for all notes, one selected in each
-  - custom scales
-    - custom chip at top
-      - when not selected & default selected: normal, show default tunings available
-      - when selected:
-        - default tunings not visible
-        - replaced by list of interval chips
-        - multiple chips can be selected or deselected
-        - text box between top custom chip (separator below) and interval chips below
 - options
   - sharp or flat
-  - low string top or bottom
   - color palette dropdown (v2, v1 will have dark mode defaults)
     - ui component selection bubbles at the top, color wheel with rgb at the bottom, user can click to select or enter manually
     - edit background, blip root, blip text root, string colors, fret colors, fretboard color, fretboard marker colors, etc.
