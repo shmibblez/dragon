@@ -17,12 +17,14 @@ I was trying to learn the blues scale with drop D tuning but couldn't find a sca
   -  make sheet that expands when option selected, add button somewhere to hide sheet (make inline)
   -  add animation to sheet expanding and shrinking, make border around prefs that houses option content
 - options
+  - note display type (Do Re Mi or letters)
   - sharp or flat
   - color palette dropdown (v2, v1 will have dark mode defaults)
     - ui component selection bubbles at the top, color wheel with rgb at the bottom, user can click to select or enter manually
     - edit background, blip root, blip text root, string colors, fret colors, fretboard color, fretboard marker colors, etc.
     - use sharp or flat notes selector
 - scales
+  - add japanese scale
   - make sure current ones are correct (double check, they _should_ be ok)
   - add more scales, japanese scale, other cool scales, etc
 - tuning
