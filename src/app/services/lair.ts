@@ -60,7 +60,7 @@ export class LairService {
 
   updateTuning(tuning: Tuning) {
     this.appState.next({ ...this.appState.getValue(), tuning: tuning })
-    document.cookie = `tuningName=${tuning.name}; path=/; max-age=31536000;` // 1 year
+    document.cookie = `${this.numberOfStrings}tuningName=${tuning.name}; path=/; max-age=31536000;` // 1 year
   }
 
   updateScale(scale: Scale) {
@@ -69,7 +69,8 @@ export class LairService {
   }
 
   updateNumberOfStrings(n: NumberOfStrings) {
-    this.appState.next({ ...this.appState.getValue(), numberOfStrings: n, tuning: TuningRecipes.get(n)!.get("Standard")! })
+    const t = getCookieTuning(n)
+    this.appState.next({ ...this.appState.getValue(), numberOfStrings: n, tuning: t })
     document.cookie = `numberOfStrings=${n}; path=/; max-age=31536000;` // 1 year
   }
 
@@ -159,7 +160,9 @@ function getCookie<T>(name: string, defaultValue: T): T {
   return document.cookie.split('; ').find(row => row.startsWith(name + '='))?.split('=')[1] as T || defaultValue;
 }
 
-function getCookieTuning() {
-  const tuning = TuningRecipes.get(parseInt(getCookie("numberOfStrings", "6")) as NumberOfStrings)!.get(getCookie('tuningName', "Standard"))!
+function getCookieTuning(nStrings: NumberOfStrings = parseInt(getCookie('numberOfStrings', "6")) as NumberOfStrings): Tuning {
+  // todo: make sure within range, could be anything rn
+  const nStringsClean = [4, 5, 6, 7, 8].includes(nStrings) ? nStrings : 6
+  const tuning = TuningRecipes.get(nStringsClean)!.get(getCookie(`${nStringsClean}tuningName`, "Standard"))!
   return tuning ?? TuningRecipes.get(6)!.get("Standard")!
 }

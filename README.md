@@ -8,10 +8,17 @@ I was trying to learn the blues scale with drop D tuning but couldn't find a sca
 
 <small>This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.4.</small>
 
+## Current Functionality:
+- need to add more but for now so i dont forget:
+- cookies:
+  - everything key value pairs
+  - tuning is special, key prepends string number
+    - ex: 5 string tuning key is 5tuningName, 6 strings 6tuningName etc.
+    - bit haccy but quick fix, still got haccs
+
 # Global TODO
 
-- cookie support
-  - persist last selected options and defaults (currently resets to defaults)
+- cookie support (added!, somewhat lol)
   - allow adding custom scales and show all saved ones (rename, delete, add custom)
 - menu layout:
   -  make sheet that expands when option selected, add button somewhere to hide sheet (make inline)
