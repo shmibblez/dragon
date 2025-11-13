@@ -144,7 +144,7 @@ export interface Lair {
 
 const DEFAULT_LAIR: Lair = {
   // current scale
-  scale: ScaleRecipes.get("Major")!,
+  scale: ScaleRecipes.get(getCookie('scaleName', "Major"))!,
   rootNote: getCookie('rootNote', "C") as Note,
   // guitar tuning
   tuning: getCookieTuning(),
