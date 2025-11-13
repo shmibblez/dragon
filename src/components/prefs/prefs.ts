@@ -6,7 +6,7 @@ import { NumberOfStrings, TuningRecipes } from "../../app/objects/tuning";
 import { LairService } from "../../app/services/lair";
 import { ScaleRecipes } from "../../app/objects/scale";
 import { ScaleDropdownComponent } from "./scale/scaleDropdown";
-import { allNotesWithSharps, isSameNote, Note } from "../../app/objects/note";
+import { allNotesWithSharps, isNote, isSameNote, isSolfege, Note, noteToSolfege, Solfege, solfegeToNote } from "../../app/objects/note";
 import { LayoutDropdownComponent } from "./layout/layoutDropdown";
 
 type pref = "strings" | "tuning" | "scales" | "root" | "layout" | null;
@@ -20,7 +20,9 @@ type pref = "strings" | "tuning" | "scales" | "root" | "layout" | null;
 export class PrefsComponent {
     selectedOption: WritableSignal<pref> = signal(null);
     readonly stringNumbers: NumberOfStrings[] = [4, 5, 6, 7, 8];
-    readonly notes = allNotesWithSharps
+    get notes() {
+        return this.lair.noteNamingConvention === "letters" ? allNotesWithSharps : allNotesWithSharps.map(n => noteToSolfege(n));
+    }
 
     constructor(private lair: LairService, private elementRef: ElementRef) { }
 
@@ -37,8 +39,12 @@ export class PrefsComponent {
         return this.lair.numberOfStrings
     }
 
-    isNoteRoot(n: Note): boolean {
-        return isSameNote(n, this.lair.rootNote)
+    isNoteRoot(n: Note | Solfege): boolean {
+        if (isSolfege(n as string)) {
+            return isSameNote(solfegeToNote(n as Solfege), this.lair.rootNote)
+        } else {
+            return isSameNote(n as Note, this.lair.rootNote)
+        }
     }
 
     @HostListener('window:resize', ['$event'])
@@ -50,7 +56,7 @@ export class PrefsComponent {
         const prefElement = this.elementRef.nativeElement.querySelector("#prefs");
         const dropdownContentElement = this.elementRef.nativeElement.querySelector("#dropdown-content")
         // update borders if pref shown
-        const br = window.innerWidth < 600 ? "max(5vw, 7.5mm)": "min(3.5vw, 14mm)"
+        const br = window.innerWidth < 600 ? "max(5vw, 7.5mm)" : "min(3.5vw, 14mm)"
         if (prefElement) {
             prefElement.style.borderRadius = prefShown ? `${br} ${br} 0 0` : br;
             prefElement.style.borderBottom = prefShown ? "none" : "2px solid white";
@@ -104,7 +110,11 @@ export class PrefsComponent {
         this.lair.updateNumberOfStrings(n)
     }
 
-    onRootSelected(n: Note) {
-        this.lair.updateRootNote(n)
+    onRootSelected(n: Note | Solfege) {
+        if (isSolfege(n as string)) {
+            this.lair.updateRootNote(solfegeToNote(n as Solfege))
+        } else {
+            this.lair.updateRootNote(n as Note)
+        }
     }
 }

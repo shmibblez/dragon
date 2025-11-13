@@ -2,9 +2,11 @@ import { Component } from "@angular/core";
 import { LairService } from "../../../app/services/lair";
 import { ChipComponent } from "../../chip/chip";
 import { SelectionBarComponent } from "../../selectionBar/selectionBar";
+import { Note } from "../../../app/objects/note";
 
 type HorizontalOrientation = "Left" | "Right";
 type VerticalOrientation = "Top" | "Bottom";
+type NoteNamingConvention = "Letters" | "Solfège";
 
 @Component({
     selector: "layoutDropdown",
@@ -15,9 +17,24 @@ type VerticalOrientation = "Top" | "Bottom";
 export class LayoutDropdownComponent {
     constructor(private lair: LairService) { }
 
+    noteNamingConventions(): NoteNamingConvention[] {
+        return ["Letters", "Solfège"];
+    }
+
+    selectedNoteNamingConvention(): NoteNamingConvention {
+        return this.lair.noteNamingConvention === "letters" ? "Letters" : "Solfège";
+    }
+
+    updateNoteNamingConvention(): (convention: NoteNamingConvention) => void {
+        return (convention: NoteNamingConvention) => {
+            this.lair.updateNoteNamingConvention(convention === "Letters" ? "letters" : "solfège");
+        }
+    }
+
     horizontalOptions(): HorizontalOrientation[] {
         return ["Left", "Right"];
     }
+
     verticalOptions(): VerticalOrientation[] {
         return ["Top", "Bottom"];
     }

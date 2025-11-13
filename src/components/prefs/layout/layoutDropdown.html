@@ -1,4 +1,5 @@
 <div id="layout-dropdown">
+    <selectionBar label="Note Naming Convention?" [selectedItem]="selectedNoteNamingConvention()" [items]="noteNamingConventions()" [onSelectItem]="updateNoteNamingConvention()"></selectionBar>
     <selectionBar label="Picking Hand?" [selectedItem]="leftyOrRighty()" [items]="horizontalOptions()" [onSelectItem]="changeLayoutDirection()"></selectionBar>
     <selectionBar label="Low String Location?" [selectedItem]="fatStringLocation()" [items]="verticalOptions()" [onSelectItem]="changeFFFatStringLocation()"></selectionBar>
 </div>

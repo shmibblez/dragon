@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, Input, ViewChild } from "@angular/core";
-import { isSameNote, nextNoteFlat, nextNoteSharp, Note } from "../../app/objects/note";
+import { isSameNote, nextNoteFlat, nextNoteSharp, Note, noteToSolfege } from "../../app/objects/note";
 import { LairService } from "../../app/services/lair";
 import { Subscription } from "rxjs";
 
@@ -88,6 +88,7 @@ export class FretboardComponent {
         let h = rect.height * scale; // canvas.height;
         const smol = w < 600 * scale;
         const lefty = this.leftOrRightHanded === "left"
+        const solfege = this.lair.noteNamingConvention === "solfège"
 
         console.log(`drawing fretboard ${w}x${h}, ${this.numberOfStrings} strings, ${this.numberOfFrets} frets, ${this.leftOrRightHanded} handed`)
 
@@ -177,10 +178,11 @@ export class FretboardComponent {
         }
 
         // draw blips / note markers
-        const blipRadius = yPadding / 2
+        const blipRadius = yPadding / 1.5
+        const fontSize = blipRadius * 1.1
         ctx.textAlign = "center"
         ctx.textBaseline = "middle"
-        ctx.font = `${fontWeight} ${blipRadius * 1.25}px ${fontFamily}`
+        ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`
         const notes = this.scale.getNotes(this.rootNote);
         // start at lowest string, go to highest
         for (let s = 0; s < this.numberOfStrings; s++) {
@@ -213,7 +215,7 @@ export class FretboardComponent {
                     // ctx.stroke()
                     // draw note text
                     ctx.fillStyle = "#000000ff"
-                    ctx.fillText(note, x, y)
+                    ctx.fillText(solfege ? noteToSolfege(note) : note, x, y)
                 }
 
                 // update note for next fret, sharp or flat based on user pref
